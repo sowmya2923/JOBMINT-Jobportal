@@ -22,7 +22,9 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(cors({
   origin: function (origin, callback) {
-    const allowed = ["http://localhost:5173", "http://localhost:5174"];
+    const allowed = ["http://localhost:5173", 
+      "http://localhost:5174",
+    "https://jobmint-frontend.onrender.com"];
     if (process.env.FRONTEND_URL) {
       allowed.push(process.env.FRONTEND_URL.replace(/\/$/, "")); // Strip trailing slash if present
     }
