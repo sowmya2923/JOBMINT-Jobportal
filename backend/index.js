@@ -21,7 +21,11 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: [
+    "http://localhost:5173", 
+    "http://localhost:5174",
+    process.env.FRONTEND_URL // <-- Add your deployed frontend URL here
+  ].filter(Boolean), // Filters out undefined/null if FRONTEND_URL isn't set
   credentials: true
 }));
 

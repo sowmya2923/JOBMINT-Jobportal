@@ -76,8 +76,8 @@ router.post("/login", async (req, res) => {
     // Set HTTP-Only Cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // Set to true in production with HTTPS
-      sameSite: "lax",
+      secure: true, // Required for HTTPS on Render
+      sameSite: "none", // Required for cross-site cookies
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 

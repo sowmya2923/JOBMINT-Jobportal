@@ -49,14 +49,13 @@ export default function Login() {
       }, 800);
 
     } catch (err) {
-
       console.log("LOGIN ERROR:", err);
-
+      const errorMsg = err.response?.data?.message 
+        || (err.code === "ERR_NETWORK" ? "Network Error: Cannot connect to Backend API. Check your VITE_API_URL." : "Invalid credentials. Please try again.");
       setAlert({
         type: "error",
-        msg: err.response?.data?.message || "Invalid credentials. Please try again."
+        msg: errorMsg
       });
-
     } finally {
       setLoading(false);
     }
