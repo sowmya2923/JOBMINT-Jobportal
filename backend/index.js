@@ -21,13 +21,22 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173", 
-    "http://localhost:5174",
-    process.env.FRONTEND_URL // <-- Add your deployed frontend URL here
-  ].filter(Boolean), // Filters out undefined/null if FRONTEND_URL isn't set
+  origin: function (origin, callback) {
+    const allowed = ["http://localhost:5173", "http://localhost:5174"];
+    if (process.env.FRONTEND_URL) {
+      allowed.push(process.env.FRONTEND_URL.replace(/\/$/, "")); // Strip trailing slash if present
+    }
+    if (!origin || allowed.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
+// Health Check
+app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 // ROUTES
 app.use("/api/auth", loginAuth);
