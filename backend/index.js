@@ -52,7 +52,6 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/uploads", express.static("uploads"));
 
 // Server
-const PORT = process.env.PORT || 5000;
 let gfsBucket;
 
 // MongoDB Connection
@@ -85,7 +84,7 @@ app.get("/api/file/:filename", async (req, res) => {
 });
 
 // Server
-const PORT=process.env.PORT||5000
+const PORT=process.env.PORT || 5000
 app.listen(PORT,"0.0.0.0",() => {
   console.log(`Server running on port ${PORT}`);
 });
